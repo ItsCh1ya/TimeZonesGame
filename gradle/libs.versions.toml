@@ -1,5 +1,9 @@
 [versions]
 agp = "8.3.0-alpha03"
+hilt-android = "2.45"
+hilt-android-compiler = "2.46.1"
+hilt-compiler = "1.0.0"
+hilt-navigation-compose = "1.1.0-alpha01"
 kotlin = "1.8.10"
 core-ktx = "1.12.0"
 junit = "4.13.2"
@@ -12,7 +16,11 @@ appcompat = "1.6.1"
 material = "1.9.0"
 
 [libraries]
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android-compiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
