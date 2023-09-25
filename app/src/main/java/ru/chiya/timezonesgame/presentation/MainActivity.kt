@@ -4,17 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import ru.chiya.timezonesgame.presentation.screen.main.MainScreen
+import ru.chiya.timezonesgame.presentation.screen.remember.RememberScreen
 import ru.chiya.timezonesgame.presentation.ui.theme.BackgroundColor
 import ru.chiya.timezonesgame.presentation.ui.theme.TimeZonesGameTheme
 
@@ -36,6 +35,18 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = "main") {
                             MainScreen(navController = navController)
+                        }
+                        // destination - screen after remember
+                        composable(
+                            route = "remember/{destination}",
+                            arguments = listOf(navArgument("destination") {
+                                type = NavType.StringType
+                            })
+                        ) { backStackEntry ->
+                            RememberScreen(
+                                navController = navController,
+                                destination = backStackEntry.arguments?.getString("destination")!! // TODO: null-safety
+                            )
                         }
                     }
                 }

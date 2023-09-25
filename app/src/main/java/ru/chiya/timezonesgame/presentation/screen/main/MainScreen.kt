@@ -78,19 +78,18 @@ fun MainScreen(
                     .padding(bottom = 60.dp)
                     .padding(horizontal = 20.dp)
             ) { // Bottom block
-
                 GradientButton(text = "Casual",
                     gradient = ButtonGradient,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        navController.navigate("casual")
+                        navController.navigate("remember/casual")
                     })
                 Spacer(modifier = Modifier.height(33.dp))
                 GradientButton(text = "Play for time",
                     gradient = ButtonGradient,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        navController.navigate("play_for_time")
+                        navController.navigate("remember/play_for_time")
                     })
             }
         }
