@@ -1,4 +1,4 @@
-package ru.chiya.timezonesgame.ui.theme
+package ru.chiya.timezonesgame.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
