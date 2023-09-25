@@ -1,16 +1,20 @@
 package ru.chiya.timezonesgame.presentation.screen.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -28,9 +32,11 @@ import ru.chiya.timezonesgame.presentation.screen.common.GradientButton
 import ru.chiya.timezonesgame.presentation.ui.theme.ButtonGradient
 
 @Composable
-fun MainScreen (
+fun MainScreen(
     navController: NavController
 ) {
+    var showPlayButton by remember { mutableStateOf(true) }
+
     Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
         Column {// Top block
             Image(
@@ -41,24 +47,52 @@ fun MainScreen (
                     .fillMaxWidth()
                     .height(520.dp)
             )
-            Text(
-                text = "match the time zone with the city".uppercase(),
-                style = TextStyle(
-                    fontSize = 50.sp,
-                    lineHeight = 50.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(700),
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
         }
-        Column(Modifier.padding(bottom = 60.dp)) { // Bottom block
-            GradientButton(text = "PLAY", gradient = ButtonGradient, modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-            )
+        AnimatedVisibility(visible = showPlayButton) {
+            Column(
+                Modifier
+                    .padding(bottom = 60.dp)
+                    .padding(horizontal = 20.dp)
+            ) { // Bottom block
+                Text(
+                    text = "match the time zone with the city".uppercase(), style = TextStyle(
+                        fontSize = 50.sp,
+                        lineHeight = 50.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFFFFFFF),
+                        textAlign = TextAlign.Center,
+                    )
+                )
+                GradientButton(text = "PLAY",
+                    gradient = ButtonGradient,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        showPlayButton = !showPlayButton
+                    })
+            }
+        }
+        AnimatedVisibility(visible = !showPlayButton) {
+            Column(
+                Modifier
+                    .padding(bottom = 60.dp)
+                    .padding(horizontal = 20.dp)
+            ) { // Bottom block
+
+                GradientButton(text = "Casual",
+                    gradient = ButtonGradient,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        navController.navigate("casual")
+                    })
+                Spacer(modifier = Modifier.height(33.dp))
+                GradientButton(text = "Play for time",
+                    gradient = ButtonGradient,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        navController.navigate("play_for_time")
+                    })
+            }
         }
     }
 }

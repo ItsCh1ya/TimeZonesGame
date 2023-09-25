@@ -43,7 +43,7 @@ fun GradientButton(
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "play".uppercase(),
+                text = text.uppercase(),
                 style = TextStyle(
                     fontSize = 30.sp,
                     lineHeight = 30.sp,
