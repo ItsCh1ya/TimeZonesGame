@@ -2,7 +2,7 @@ package ru.chiya.timezonesgame.presentation.screen.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -37,8 +38,8 @@ fun MainScreen(
 ) {
     var showPlayButton by remember { mutableStateOf(true) }
 
-    Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
-        Column {// Top block
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.align(Alignment.TopCenter)) {// Top block
             Image(
                 painter = painterResource(id = R.drawable.bg),
                 contentDescription = "bg image",
@@ -48,51 +49,54 @@ fun MainScreen(
                     .height(520.dp)
             )
         }
-        AnimatedVisibility(visible = showPlayButton) {
-            Column(
-                Modifier
-                    .padding(bottom = 60.dp)
-                    .padding(horizontal = 20.dp)
-            ) { // Bottom block
-                Text(
-                    text = "match the time zone with the city".uppercase(), style = TextStyle(
-                        fontSize = 50.sp,
-                        lineHeight = 50.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
+        Column(modifier = Modifier.align(Alignment.BottomCenter)) {
+            AnimatedVisibility(visible = showPlayButton) {
+                Column(
+                    Modifier
+                        .padding(bottom = 60.dp)
+                        .padding(horizontal = 20.dp)
+                ) { // Bottom block
+                    Text(
+                        text = "match the time zone with the city".uppercase(), style = TextStyle(
+                            fontSize = 50.sp,
+                            lineHeight = 50.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(700),
+                            color = Color(0xFFFFFFFF),
+                            textAlign = TextAlign.Center,
+                        )
                     )
-                )
-                Spacer(modifier = Modifier.height(82.dp))
-                GradientButton(text = "PLAY",
-                    gradient = ButtonGradient,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        showPlayButton = !showPlayButton
-                    })
+                    Spacer(modifier = Modifier.height(82.dp))
+                    GradientButton(text = "PLAY",
+                        gradient = ButtonGradient,
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            showPlayButton = !showPlayButton
+                        })
+                }
             }
-        }
-        if (!showPlayButton) {
-            Column(
-                Modifier
-                    .padding(bottom = 60.dp)
-                    .padding(horizontal = 20.dp)
-            ) { // Bottom block
-                GradientButton(text = "Casual",
-                    gradient = ButtonGradient,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        navController.navigate("remember/casual")
-                    })
-                Spacer(modifier = Modifier.height(33.dp))
-                GradientButton(text = "Play for time",
-                    gradient = ButtonGradient,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        navController.navigate("remember/play_for_time")
-                    })
+            if (!showPlayButton) {
+                Column(
+                    Modifier
+                        .padding(bottom = 60.dp)
+                        .padding(horizontal = 20.dp)
+                ) { // Bottom block
+                    GradientButton(text = "Casual",
+                        gradient = ButtonGradient,
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            navController.navigate("remember/casual")
+                        })
+                    Spacer(modifier = Modifier.height(33.dp))
+                    GradientButton(text = "Play for time",
+                        gradient = ButtonGradient,
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            navController.navigate("remember/play_for_time")
+                        })
+                }
             }
+
         }
     }
 }
