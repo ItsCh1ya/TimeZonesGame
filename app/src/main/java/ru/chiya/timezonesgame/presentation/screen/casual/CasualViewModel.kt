@@ -11,12 +11,14 @@ class CasualViewModel @Inject constructor(
     private val globalCities: GlobalCities
 ) : ViewModel() {
     private val cities = globalCities.cities.toMutableList()
-    var questionsLeft = cities.size
+    var questionsLeft = cities.size - 1
     var currentCity: Timezone = cities.random()
 
     fun answer(inputCity: String): Boolean {
         val isCorrect = inputCity == currentCity.city
-        updateCurrentCity()
+        if (questionsLeft > 0) {
+            updateCurrentCity()
+        }
         return isCorrect
     }
 
