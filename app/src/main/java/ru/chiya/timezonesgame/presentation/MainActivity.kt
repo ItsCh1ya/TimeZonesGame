@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import ru.chiya.timezonesgame.presentation.screen.casual.CasualScreen
 import ru.chiya.timezonesgame.presentation.screen.main.MainScreen
+import ru.chiya.timezonesgame.presentation.screen.play_for_time.PlayForTimeScreen
 import ru.chiya.timezonesgame.presentation.screen.remember.RememberScreen
 import ru.chiya.timezonesgame.presentation.screen.result.ResultScreen
 import ru.chiya.timezonesgame.presentation.ui.theme.BackgroundColor
@@ -51,6 +52,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = "casual") { CasualScreen(navController = navController) }
+                        composable(route = "play_for_time") { PlayForTimeScreen(navController = navController) }
                         composable(
                             route = "result/{score}",
                             arguments = listOf(navArgument("score") {
