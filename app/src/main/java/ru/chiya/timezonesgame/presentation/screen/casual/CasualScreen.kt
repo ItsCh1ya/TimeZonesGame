@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ru.chiya.timezonesgame.R
 import ru.chiya.timezonesgame.presentation.screen.common.GradientButton
+import ru.chiya.timezonesgame.presentation.screen.common.TextField
 import ru.chiya.timezonesgame.presentation.ui.theme.ButtonGradient
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +45,7 @@ fun CasualScreen(
     var score by remember {
         mutableStateOf(0)
     }
-    var inputCity by remember {
+    val inputCity = remember {
         mutableStateOf("")
     }
     Box(
@@ -88,14 +89,14 @@ fun CasualScreen(
                 Modifier.padding(bottom = 68.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                TextField(value = inputCity, onValueChange = { inputCity = it })
-
+                TextField(inputCity)
+                Spacer(modifier = Modifier.height(15.dp))
                 GradientButton(text = "OK",
                     gradient = ButtonGradient,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        score += if (casualViewModel.answer(inputCity)) 1 else -1
-
+                        score += if (casualViewModel.answer(inputCity.value)) 1 else -1
+                        inputCity.value = ""
                         if (casualViewModel.questionsLeft <= 0) {
                             navController.navigate("result/$score")
                         }
