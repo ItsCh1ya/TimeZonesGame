@@ -5,7 +5,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.delay
 import ru.chiya.domain.model.Timezone
 import ru.chiya.timezonesgame.R
 
@@ -50,10 +55,9 @@ fun PlayForTimeScreen(
 ) {
     val (height, width) = LocalConfiguration.current.run { screenHeightDp to screenWidthDp }
     val selected = Selected(null, null)
-    var score by remember {
+    var score = remember {
         mutableStateOf(0)
     }
-
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -65,6 +69,7 @@ fun PlayForTimeScreen(
                 .fillMaxWidth()
                 .height(520.dp)
         )
+        TopRow(score, navController)
         Box(
             Modifier
                 .align(Alignment.Center)
@@ -121,7 +126,7 @@ fun PlayForTimeScreen(
 
                                     selected.city = null
                                     expandedText = null
-                                    score++
+                                    score.value++
                                 }
                                 // If selected image and city, but with incorrect answer
                                 else if (selected.city != null && selected.image != null) {
@@ -130,7 +135,7 @@ fun PlayForTimeScreen(
 
                                     expandedText = null
                                     expandedImage = null
-                                    score--
+                                    score.value--
                                 }
                                 Log.d("score", score.toString())
                             }) {
@@ -166,14 +171,14 @@ fun PlayForTimeScreen(
                                     textVisible = false
                                     selected.city = null
                                     expandedText = null
-                                    score++
+                                    score.value++
                                 } else if (selected.city != null && selected.image != null) {
                                     selected.city = null
                                     selected.image = null
 
                                     expandedText = null
                                     expandedImage = null
-                                    score--
+                                    score.value--
                                 }
                                 Log.d("score", score.toString())
                             }) {
@@ -194,5 +199,33 @@ fun PlayForTimeScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TopRow(
+    score: MutableState<Int>,
+    navController: NavHostController
+) {
+
+    val secondsLeft = remember { mutableStateOf(10) }
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+        val textStyle = TextStyle(
+            fontSize = 26.sp,
+            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+            fontWeight = FontWeight(700),
+            color = Color(0xFFFFFFFF),
+            textAlign = TextAlign.Center,
+        )
+        Text(text = "Time left: ${secondsLeft.value}s", style = textStyle)
+        Text(text = "Score: ${score.value}", style = textStyle)
+    }
+
+    LaunchedEffect(key1 = secondsLeft) {
+        while (secondsLeft.value > 0) {
+            delay(1_000)
+            secondsLeft.value -= 1
+        }
+        navController.navigate("result/${score.value}")
     }
 }
