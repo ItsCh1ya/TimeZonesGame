@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.chiya.timezonesgame.presentation.screen.casual.CasualScreen
 import ru.chiya.timezonesgame.presentation.screen.main.MainScreen
 import ru.chiya.timezonesgame.presentation.screen.remember.RememberScreen
+import ru.chiya.timezonesgame.presentation.screen.result.ResultScreen
 import ru.chiya.timezonesgame.presentation.ui.theme.BackgroundColor
 import ru.chiya.timezonesgame.presentation.ui.theme.TimeZonesGameTheme
 
@@ -50,6 +51,17 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = "casual") { CasualScreen(navController = navController) }
+                        composable(
+                            route = "result/{score}",
+                            arguments = listOf(navArgument("score") {
+                                type = NavType.IntType
+                            })
+                        ) { backStackEntry ->
+                            ResultScreen(
+                                navController = navController,
+                                score = backStackEntry.arguments?.getInt("score")!! // TODO: null-safety
+                            )
+                        }
                     }
                 }
             }
