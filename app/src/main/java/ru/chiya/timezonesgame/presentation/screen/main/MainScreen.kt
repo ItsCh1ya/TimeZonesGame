@@ -73,7 +73,7 @@ fun MainScreen(
                     })
             }
         }
-        AnimatedVisibility(visible = !showPlayButton) {
+        if (!showPlayButton) {
             Column(
                 Modifier
                     .padding(bottom = 60.dp)
