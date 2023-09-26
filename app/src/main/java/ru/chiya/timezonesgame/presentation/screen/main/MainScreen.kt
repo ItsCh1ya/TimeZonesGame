@@ -64,6 +64,7 @@ fun MainScreen(
                         textAlign = TextAlign.Center,
                     )
                 )
+                Spacer(modifier = Modifier.height(82.dp))
                 GradientButton(text = "PLAY",
                     gradient = ButtonGradient,
                     modifier = Modifier.fillMaxWidth(),
