@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +37,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import ru.chiya.timezonesgame.R
+import ru.chiya.timezonesgame.presentation.screen.common.GradientButton
+import ru.chiya.timezonesgame.presentation.ui.theme.ButtonGradient
 
 @Composable
 fun RememberScreen(
@@ -81,6 +85,7 @@ fun RememberScreen(
                     textAlign = TextAlign.Center,
                 )
             )
+            Spacer(modifier = Modifier.weight(2f))
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 119.dp)) {
                 items(viewModel.cities) { city ->
                     Column {
@@ -107,6 +112,16 @@ fun RememberScreen(
                         )
                     }
                 }
+            }
+            Row(Modifier.padding(bottom = 68.dp)) {
+                GradientButton(text = "Next",
+                    gradient = ButtonGradient,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = {
+                        navController.navigate(destination)
+                    }
+                )
             }
         }
     }
