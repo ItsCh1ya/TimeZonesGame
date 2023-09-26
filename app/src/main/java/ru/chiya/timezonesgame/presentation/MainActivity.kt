@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
+import ru.chiya.timezonesgame.presentation.screen.casual.CasualScreen
 import ru.chiya.timezonesgame.presentation.screen.main.MainScreen
 import ru.chiya.timezonesgame.presentation.screen.remember.RememberScreen
 import ru.chiya.timezonesgame.presentation.ui.theme.BackgroundColor
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
                                 destination = backStackEntry.arguments?.getString("destination")!! // TODO: null-safety
                             )
                         }
+                        composable(route = "casual") { CasualScreen(navController = navController) }
                     }
                 }
             }
